@@ -1,2 +1,6 @@
 venv
 .idea
+dist
+py_printer.egg-info
+build
+**/__pycache__
