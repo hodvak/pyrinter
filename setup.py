@@ -1,9 +1,9 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='py-printer',
+    name='pyrinter',
     version='0.0.1a1',
-    packages=find_packages(include=['py_printer', 'py_printer.*']),
+    packages=find_packages(include=['pyrinter', 'pyrinter.*']),
     author='Hod Vaknin',
     license='MIT',
 

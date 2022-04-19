@@ -1,6 +1,6 @@
 venv
 .idea
 dist
-py_printer.egg-info
+pyrinter.egg-info
 build
 **/__pycache__
