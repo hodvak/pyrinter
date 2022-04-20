@@ -1,18 +1,14 @@
-# Pyrinter #
-[![Github licence](https://img.shields.io/github/license/hodvak/pyrinter)](https://github.com/hodvak/pyrinter/blob/master/LICENSE)
-[![PyPI version](https://img.shields.io/pypi/v/pyrinter)](https://pypi.org/project/pyrinter/)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+# Welcome to Pyrinter's documentation! #
 
-## What is it ##
 **Pyrinter** is a free open source python package for easy way to use physical printers.  
 
 As for the moment the package only works on windows, 
 but in the future we want to make it cross platform
 
 ## How to Install ##
-with pip:
-```sh
-pip install pyrinter
+install using pip:
+```console
+$ pip install pyrinter
 ```
 
 ## How to Use ##
