@@ -32,3 +32,7 @@ html_theme = "furo"
 
 # -- Options for EPUB output
 epub_show_urls = "footnote"
+
+source_suffix = [
+    ".md",
+]
