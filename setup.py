@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="pyrinter",
-    version="0.0.1a2",
+    version="0.0.1a3",
     packages=find_packages(include=["pyrinter", "pyrinter.*"]),
     author="Hod Vaknin",
     license="MIT",
