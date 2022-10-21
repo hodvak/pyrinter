@@ -14,11 +14,16 @@ class Printer(AbsPrinter):
         doc.CreatePrinterDC(self.name)
         doc.StartDoc(document.name)
         doc.SetMapMode(win32con.MM_HIENGLISH)
+
+        type_to_command = {
+            "text": Printer.__add_text,
+            "frame_rect": Printer.__add_frame_rect,
+        }
+
         for page in document:
             doc.StartPage()
             for to_print in page:
-                if to_print["type"] == "text":
-                    Printer.__add_text(doc, to_print["data"])
+                type_to_command[to_print["type"]](doc, to_print["data"])
             doc.EndPage()
         doc.EndDoc()
 
@@ -37,6 +42,24 @@ class Printer(AbsPrinter):
         doc.DrawText(
             data["text"], Printer.__get_printer_rect(data["rect"]), win32con.DT_LEFT
         )
+
+    @staticmethod
+    def __add_frame_rect(doc, data):
+        doc.SelectObject(
+            win32ui.CreatePen(
+                win32con.PS_SOLID,
+                int(Printer.__inch_to_printer_size(data["width"])),
+                data["color"],
+            )
+        )
+        rect = data["rect"]
+        rect = Printer.__get_printer_rect(rect)
+
+        doc.MoveTo((rect[0], rect[1]))
+        doc.LineTo((rect[0], rect[3]))
+        doc.LineTo((rect[2], rect[3]))
+        doc.LineTo((rect[2], rect[1]))
+        doc.LineTo((rect[0], rect[1]))
 
     @staticmethod
     def __get_printer_rect(rect):
