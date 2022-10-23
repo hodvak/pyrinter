@@ -41,6 +41,7 @@ class Printer(AbsPrinter):
                 }
             )
         )
+        doc.SetTextColor(Printer.__fix_color(data["color"]))
         align = win32con.DT_LEFT if data["align"] == Align.LEFT else win32con.DT_RIGHT
         doc.DrawText(
             data["text"], Printer.__get_printer_rect(data["rect"]), align
@@ -52,7 +53,7 @@ class Printer(AbsPrinter):
             win32ui.CreatePen(
                 win32con.PS_SOLID,
                 int(Printer.__inch_to_printer_size(data["width"])),
-                data["color"],
+                Printer.__fix_color(data["color"]),
             )
         )
         rect = data["rect"]
@@ -76,3 +77,7 @@ class Printer(AbsPrinter):
     @staticmethod
     def __inch_to_printer_size(inches: float):
         return inches * 1000
+
+    @staticmethod
+    def __fix_color(color: int) -> int:
+        return (color & 0x0000ff) << 16 | (color & 0x00ff00) | (color & 0xff0000) >> 16

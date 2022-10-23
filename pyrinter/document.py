@@ -36,7 +36,8 @@ class Document:
             font: Font = Font(font_name="Arial", height=12),
             page: int = None,
             rect: Tuple[float, float, float, float] = None,
-            align: Align = Align.LEFT
+            align: Align = Align.LEFT,
+            color: int = 0x000000
     ):
         """
         add text to the document
@@ -45,6 +46,7 @@ class Document:
         :param page: specific page to print on, None for the last page
         :param rect: the position to print on (inches)
         :param align: align to what side of the rect
+        :param color: the color of the text (rgb)
         :return: None
         """
         if page is None:
@@ -77,7 +79,7 @@ class Document:
             {
                 "type": "text",
                 "page": page,
-                "data": {"text": text, "font": font, "rect": rect, "align": align},
+                "data": {"text": text, "font": font, "rect": rect, "align": align, "color": color},
             }
         )
 
