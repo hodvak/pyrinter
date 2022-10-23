@@ -3,6 +3,8 @@ from .abs_printer import AbsPrinter
 import win32ui
 import win32con
 
+from ..document import Align
+
 
 class Printer(AbsPrinter):
     """
@@ -39,8 +41,9 @@ class Printer(AbsPrinter):
                 }
             )
         )
+        align = win32con.DT_LEFT if data["align"] == Align.LEFT else win32con.DT_RIGHT
         doc.DrawText(
-            data["text"], Printer.__get_printer_rect(data["rect"]), win32con.DT_LEFT
+            data["text"], Printer.__get_printer_rect(data["rect"]), align
         )
 
     @staticmethod

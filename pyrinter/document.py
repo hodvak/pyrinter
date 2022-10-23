@@ -1,3 +1,4 @@
+from enum import Enum
 from tkinter import Tk
 from tkinter.font import Font as TkFont
 from collections import namedtuple
@@ -6,13 +7,18 @@ from typing import Tuple
 Font = namedtuple("Font", ("font_name", "height"))
 
 
+class Align(Enum):
+    RIGHT = 0
+    LEFT = 1
+
+
 class Document:
     """
     document that can be printed with Printer
     """
 
     def __init__(
-        self, name: str = "My Document", page_size: Tuple[float] = (8.3, 11.7)
+            self, name: str = "My Document", page_size: Tuple[float] = (8.3, 11.7)
     ):
         """
         create document with name and
@@ -25,11 +31,12 @@ class Document:
         self.name = name
 
     def add_text(
-        self,
-        text: str,
-        font: Font = Font(font_name="Arial", height=12),
-        page: int = None,
-        rect: Tuple[float, float, float, float] = None,
+            self,
+            text: str,
+            font: Font = Font(font_name="Arial", height=12),
+            page: int = None,
+            rect: Tuple[float, float, float, float] = None,
+            align: Align = Align.LEFT
     ):
         """
         add text to the document
@@ -37,6 +44,7 @@ class Document:
         :param font: the font to use
         :param page: specific page to print on, None for the last page
         :param rect: the position to print on (inches)
+        :param align: align to what side of the rect
         :return: None
         """
         if page is None:
@@ -54,8 +62,8 @@ class Document:
             for word in line.split(" "):
                 if new_lines[-1]:
                     if (
-                        Document.__get_text_size(new_lines[-1] + " " + word, font)
-                        < rect[2] - rect[0]
+                            Document.__get_text_size(new_lines[-1] + " " + word, font)
+                            < rect[2] - rect[0]
                     ):
                         new_lines[-1] += " " + word
                     else:
@@ -69,16 +77,16 @@ class Document:
             {
                 "type": "text",
                 "page": page,
-                "data": {"text": text, "font": font, "rect": rect},
+                "data": {"text": text, "font": font, "rect": rect, "align": align},
             }
         )
 
     def add_frame_rect(
-        self,
-        rect: Tuple[float, float, float, float],
-        width: float = 0.01,
-        color: int = 0x000000,
-        page: int = None,
+            self,
+            rect: Tuple[float, float, float, float],
+            width: float = 0.01,
+            color: int = 0x000000,
+            page: int = None,
     ):
         """
         add frame rectangle to the document
