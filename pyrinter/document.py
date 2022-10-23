@@ -1,3 +1,5 @@
+from tkinter import Tk
+from tkinter.font import Font as TkFont
 from collections import namedtuple
 from typing import Tuple
 
@@ -46,6 +48,23 @@ class Document:
         if rect is None:
             rect = (0.75, 0.75, self.page_size[0] - 0.75, self.page_size[1] - 0.75)
 
+        new_lines = []
+        for line in text.split("\n"):
+            new_lines.append("")
+            for word in line.split(" "):
+                if new_lines[-1]:
+                    if (
+                        Document.__get_text_size(new_lines[-1] + " " + word, font)
+                        < rect[2] - rect[0]
+                    ):
+                        new_lines[-1] += " " + word
+                    else:
+                        new_lines.append(word)
+                else:
+                    new_lines[-1] = word
+
+        text = "\n".join(new_lines)
+
         self.data.append(
             {
                 "type": "text",
@@ -85,6 +104,14 @@ class Document:
                 "data": {"rect": rect, "color": color, "width": width},
             }
         )
+
+    @staticmethod
+    def __get_text_size(text: str, font: Font) -> float:
+        root = Tk()  # Needed to estimate the width.
+        font_var = TkFont(family=font.font_name, size=font.height, weight="normal")
+        width = font_var.measure(text) / 105
+        root.destroy()  # Destroy the created window
+        return width
 
     def __getitem__(self, index: int):
         if index >= self.pages:
