@@ -80,6 +80,7 @@ class Printer(AbsPrinter):
     def __fix_color(color: int) -> int:
         """
         windows using BGR over RGB color, this method converts RGB color to BGR color
+
         :param color: RGB color
         :return: BGR color
         """

@@ -1,0 +1,4 @@
+Align
+=====
+
+.. autoenum:: pyrinter.Align

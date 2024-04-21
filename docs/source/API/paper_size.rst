@@ -1,0 +1,4 @@
+PaperSize
+=========
+
+.. autoenum:: pyrinter.PaperSize

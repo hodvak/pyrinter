@@ -13,6 +13,7 @@ class AbsPrinter(abc.ABC):
     def __init__(self, name: Optional[str] = None):
         """
         makes a Printer object to print with
+
         :param name: the name of the printer, None for default printer
         """
         if not name:  # name is None or empty
@@ -29,6 +30,7 @@ class AbsPrinter(abc.ABC):
     def print_doc(self, document: Document):
         """
         use to print text with the printer
+
         :param document: the document to print
         :return: None
         """

@@ -4,15 +4,25 @@ from tkinter.font import Font as TkFont
 from collections import namedtuple
 from typing import Tuple, Generator, Optional, Union
 
-Font = namedtuple("Font", ("font_name", "height"))
+
+class Font(namedtuple("Font", ("font_name", "height"))):
+    """
+    class to represent font properties (font name and height)
+    """
 
 
 class Align(Enum):
+    """
+    Alignment for text
+    """
     RIGHT = 0
     LEFT = 1
 
 
 class PaperSize(Enum):
+    """
+    Common paper sizes
+    """
     LETTER = (8.5, 11)
     A4 = (8.3, 11.7)
 
@@ -23,12 +33,13 @@ class Document:
     """
 
     def __init__(
-        self,
-        name: str = "My Document",
-        page_size: Union[PaperSize, Tuple[float, float]] = PaperSize.A4,
+            self,
+            name: str = "My Document",
+            page_size: Union[PaperSize, Tuple[float, float]] = PaperSize.A4,
     ):
         """
         create document with name and
+
         :param name: the name of the document (default "My Document")
         :param page_size: the size of the document (default A4)
         """
@@ -41,16 +52,17 @@ class Document:
         self.name = name
 
     def add_text(
-        self,
-        text: str,
-        font: Font = Font(font_name="Arial", height=12),
-        page: Optional[int] = None,
-        rect: Optional[Tuple[float, float, float, float]] = None,
-        align: Align = Align.LEFT,
-        color: int = 0x000000,
+            self,
+            text: str,
+            font: Font = Font(font_name="Arial", height=12),
+            page: Optional[int] = None,
+            rect: Optional[Tuple[float, float, float, float]] = None,
+            align: Align = Align.LEFT,
+            color: int = 0x000000,
     ):
         """
         add text to the document
+
         :param text: the text to print
         :param font: the font to use
         :param page: specific page to print on, None for new page. Negative indexing is supported. Default None
@@ -82,8 +94,8 @@ class Document:
             for word in line.split(" "):
                 if new_lines[-1]:
                     if (
-                        Document.__get_text_size(new_lines[-1] + " " + word, font)
-                        < rect[2] - rect[0]
+                            Document.__get_text_size(new_lines[-1] + " " + word, font)
+                            < rect[2] - rect[0]
                     ):
                         new_lines[-1] += " " + word
                     else:
@@ -108,14 +120,15 @@ class Document:
         )
 
     def add_frame_rect(
-        self,
-        rect: Optional[Tuple[float, float, float, float]] = None,
-        width: float = 0.01,
-        color: int = 0x000000,
-        page: Optional[int] = None,
+            self,
+            rect: Optional[Tuple[float, float, float, float]] = None,
+            width: float = 0.01,
+            color: int = 0x000000,
+            page: Optional[int] = None,
     ):
         """
         add frame rectangle to the document
+
         :param rect: the rectangle to draw
         :param width: the width of the frame (inch)
         :param color: the color of the frame
@@ -151,6 +164,7 @@ class Document:
     def __get_text_size(text: str, font: Font) -> float:
         """
         get the text size of a text (width) by the given font
+
         :param text: the text to print
         :param font: the font to use
         :return: the width of the text
@@ -164,6 +178,7 @@ class Document:
     def __getitem__(self, index: int) -> Generator:
         """
         get the document data by pages (a generator)
+
         :param index: the index of the page. Negative indexing is supported
         :return: the document data by page
         """

@@ -3,7 +3,14 @@
 **Pyrinter** is a free open source python package for easy way to use physical printers.  
 
 As for the moment the package only works on windows, 
-but in the future we want to make it cross platform
+but in the future we want to make it cross-platform
+
+```{toctree}
+:hidden:
+:glob:
+getting_started
+API/api
+```
 
 ## How to Install ##
 Install Pyrinter using [pip](https://pip.pypa.io/):
@@ -23,9 +30,4 @@ doc.add_text("Hello World")
 
 printer = Printer("PDFCreator")
 printer.print_doc(doc)
-```
-
-```{toctree}
-:maxdepth: 1
-getting_started
 ```

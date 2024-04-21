@@ -1,9 +1,14 @@
 # Configuration file for the Sphinx documentation builder.
+#
+import os
+import sys
+os.environ['SPHINX_BUILD'] = '1'
+sys.path.insert(0, os.path.abspath('../../'))
 
 # -- Project information
 
 project = "Pyrinter"
-copyright = "2022, hodvak"
+copyright = "2024, hodvak"
 author = "hodvak"
 
 
@@ -11,11 +16,13 @@ author = "hodvak"
 
 extensions = [
     "myst_parser",
-    "sphinx.ext.duration",
-    "sphinx.ext.doctest",
+    # "sphinx.ext.duration",
+    # "sphinx.ext.doctest",
     "sphinx.ext.autodoc",
-    "sphinx.ext.autosummary",
+    # "sphinx.ext.autosummary",
     "sphinx.ext.intersphinx",
+    # "sphinx.ext.napoleon",
+    "enum_tools.autoenum",
 ]
 
 intersphinx_mapping = {
@@ -35,4 +42,5 @@ epub_show_urls = "footnote"
 
 source_suffix = [
     ".md",
+    ".rst"
 ]
