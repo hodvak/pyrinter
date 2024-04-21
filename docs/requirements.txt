@@ -1,2 +1,4 @@
 furo
 myst-parser
+sphinx_toolbox
+enum_tools
