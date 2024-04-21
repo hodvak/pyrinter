@@ -2,7 +2,7 @@ from enum import Enum
 from tkinter import Tk
 from tkinter.font import Font as TkFont
 from collections import namedtuple
-from typing import Tuple
+from typing import Tuple, Generator, Optional, Union
 
 Font = namedtuple("Font", ("font_name", "height"))
 
@@ -34,16 +34,16 @@ class Document:
             self,
             text: str,
             font: Font = Font(font_name="Arial", height=12),
-            page: int = None,
-            rect: Tuple[float, float, float, float] = None,
+            page: Optional[int] = None,
+            rect: Optional[Tuple[float, float, float, float]] = None,
             align: Align = Align.LEFT,
-            color: int = 0x000000
+            color: int = 0x000000,
     ):
         """
         add text to the document
         :param text: the text to print
         :param font: the font to use
-        :param page: specific page to print on, None for the last page
+        :param page: specific page to print on, None for new page. Negative indexing is supported. Default None
         :param rect: the position to print on (inches)
         :param align: align to what side of the rect
         :param color: the color of the text (rgb)
@@ -79,16 +79,22 @@ class Document:
             {
                 "type": "text",
                 "page": page,
-                "data": {"text": text, "font": font, "rect": rect, "align": align, "color": color},
+                "data": {
+                    "text": text,
+                    "font": font,
+                    "rect": rect,
+                    "align": align,
+                    "color": color,
+                },
             }
         )
 
     def add_frame_rect(
             self,
-            rect: Tuple[float, float, float, float],
+            rect: Optional[Tuple[float, float, float, float]] = None,
             width: float = 0.01,
             color: int = 0x000000,
-            page: int = None,
+            page: Optional[int] = None,
     ):
         """
         add frame rectangle to the document

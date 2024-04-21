@@ -7,7 +7,7 @@
 **Pyrinter** is a free open source python package for easy way to use physical printers.  
 
 As for the moment the package only works on windows, 
-but in the future we want to make it cross platform
+but in the future we want to make it cross-platform
 
 ## How to Install ##
 with pip:

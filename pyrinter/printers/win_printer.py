@@ -43,9 +43,7 @@ class Printer(AbsPrinter):
         )
         doc.SetTextColor(Printer.__fix_color(data["color"]))
         align = win32con.DT_LEFT if data["align"] == Align.LEFT else win32con.DT_RIGHT
-        doc.DrawText(
-            data["text"], Printer.__get_printer_rect(data["rect"]), align
-        )
+        doc.DrawText(data["text"], Printer.__get_printer_rect(data["rect"]), align)
 
     @staticmethod
     def __add_frame_rect(doc, data):
@@ -80,4 +78,9 @@ class Printer(AbsPrinter):
 
     @staticmethod
     def __fix_color(color: int) -> int:
-        return (color & 0x0000ff) << 16 | (color & 0x00ff00) | (color & 0xff0000) >> 16
+        """
+        windows using BGR over RGB color, this method converts RGB color to BGR color
+        :param color: RGB color
+        :return: BGR color
+        """
+        return (color & 0x0000FF) << 16 | (color & 0x00FF00) | (color & 0xFF0000) >> 16
