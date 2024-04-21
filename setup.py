@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="pyrinter",
-    version="0.0.1a5",
+    version="0.0.1a6",
     packages=find_packages(include=["pyrinter", "pyrinter.*"]),
     author="Hod Vaknin",
     license="MIT",
@@ -10,7 +10,9 @@ setup(
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     project_urls={"Source": "https://github.com/hodvak/py-printer"},
-    install_requires=["pywin32"],
+    install_requires=[
+        "pywin32; platform_system=='Windows'",
+    ],
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Environment :: Win32 (MS Windows)",
