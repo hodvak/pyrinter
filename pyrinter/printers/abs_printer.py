@@ -21,7 +21,7 @@ class AbsPrinter(abc.ABC):
         if (
             name not in printer_utils.get_all_printers()
         ):  # check that the printer's name is one of the printers
-            raise ValueError(f'not a valid printer name (\""{name}"\")')
+            raise ValueError(f'not a valid printer name (""{name}"")')
 
         self.name = name
 
