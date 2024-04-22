@@ -139,7 +139,7 @@ class Document:
             page = self.pages
 
         if page < 0:
-            page += self.page_size
+            page += self.pages
 
         if page >= self.pages:
             self.pages = page + 1
