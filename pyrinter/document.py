@@ -3,6 +3,7 @@ from tkinter import Tk
 from tkinter.font import Font as TkFont
 from collections import namedtuple
 from typing import Tuple, Generator, Optional, Union
+from PIL import Image
 
 
 class Font(namedtuple("Font", ("font_name", "height"))):
@@ -157,6 +158,51 @@ class Document:
                 "type": "frame_rect",
                 "page": page,
                 "data": {"rect": rect, "color": color, "width": width},
+            }
+        )
+
+    def add_image(self, image: Union[str, Image], rect: Optional[Tuple[int, int, int, int]] = None,
+                  page: Optional[int] = None):
+        """
+        add image to the document
+        on windows: transparent will become white background
+
+        :param image: the image to add, an PIL Image instance or a path to an image
+        :param rect: the rectangle to draw on (inches), None to draw on the whole page
+        :param page: the page to draw on, None for new page. Negative indexing is supported. Default None
+        """
+        if page is None:
+            page = self.pages
+
+        if page < 0:
+            page += self.pages
+
+        if page >= self.pages:
+            self.pages = page + 1
+
+        if page < 0:
+            raise IndexError(f"Page index out of range, must be above or equal to {-self.pages} (the number of pages)")
+
+        if isinstance(image, str):
+            image = Image.open(image)
+
+        image_width, image_height = image.size
+        if rect is None:
+            scale = min((self.page_size[0] - 0.75 * 2) / image_width, (self.page_size[1] - 0.75 * 2) / image_height)
+            new_width = int(image_width * scale)
+            new_height = int(image_height * scale)
+            center = (self.page_size[0] / 2, self.page_size[1] / 2)
+
+            rect = (center[0] - new_width / 2,
+                    center[1] - new_height / 2,
+                    center[0] + new_width / 2,
+                    center[1] + new_height / 2)
+
+        self.data.append(
+            {
+                "type": "image",
+                "page": page,
+                "data": {"image": image, "rect": rect}
             }
         )
 

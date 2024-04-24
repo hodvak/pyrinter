@@ -1,3 +1,5 @@
+from PIL import ImageWin, Image
+
 from pyrinter import Document
 from .abs_printer import AbsPrinter
 import win32ui
@@ -20,6 +22,7 @@ class Printer(AbsPrinter):
         type_to_command = {
             "text": Printer.__add_text,
             "frame_rect": Printer.__add_frame_rect,
+            "image": Printer.__add_image,
         }
 
         for page in document:
@@ -62,6 +65,18 @@ class Printer(AbsPrinter):
         doc.LineTo((rect[2], rect[3]))
         doc.LineTo((rect[2], rect[1]))
         doc.LineTo((rect[0], rect[1]))
+
+    @staticmethod
+    def __add_image(doc, data):
+        image = data['image']
+        if image.mode == 'RGBA':
+            # Create a white background image
+            white_bg = Image.new('RGBA', image.size, (255, 255, 255, 255))
+            image = Image.alpha_composite(white_bg, image)
+
+        image = image.convert('RGB')
+        dip = ImageWin.Dib(image)
+        dip.draw(doc.GetHandleOutput(), Printer.__get_printer_rect(data["rect"]))
 
     @staticmethod
     def __get_printer_rect(rect):
