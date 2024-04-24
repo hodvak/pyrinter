@@ -68,13 +68,13 @@ class Printer(AbsPrinter):
 
     @staticmethod
     def __add_image(doc, data):
-        image = data['image']
-        if image.mode == 'RGBA':
+        image = data["image"]
+        if image.mode == "RGBA":
             # Create a white background image
-            white_bg = Image.new('RGBA', image.size, (255, 255, 255, 255))
+            white_bg = Image.new("RGBA", image.size, (255, 255, 255, 255))
             image = Image.alpha_composite(white_bg, image)
 
-        image = image.convert('RGB')
+        image = image.convert("RGB")
         dip = ImageWin.Dib(image)
         dip.draw(doc.GetHandleOutput(), Printer.__get_printer_rect(data["rect"]))
 

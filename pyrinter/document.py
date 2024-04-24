@@ -16,6 +16,7 @@ class Align(Enum):
     """
     Alignment for text
     """
+
     RIGHT = 0
     LEFT = 1
 
@@ -24,6 +25,7 @@ class PaperSize(Enum):
     """
     Common paper sizes
     """
+
     LETTER = (8.5, 11)
     A4 = (8.3, 11.7)
 
@@ -34,9 +36,9 @@ class Document:
     """
 
     def __init__(
-            self,
-            name: str = "My Document",
-            page_size: Union[PaperSize, Tuple[float, float]] = PaperSize.A4,
+        self,
+        name: str = "My Document",
+        page_size: Union[PaperSize, Tuple[float, float]] = PaperSize.A4,
     ):
         """
         create document with name and
@@ -53,13 +55,13 @@ class Document:
         self.name = name
 
     def add_text(
-            self,
-            text: str,
-            font: Font = Font(font_name="Arial", height=12),
-            page: Optional[int] = None,
-            rect: Optional[Tuple[float, float, float, float]] = None,
-            align: Align = Align.LEFT,
-            color: int = 0x000000,
+        self,
+        text: str,
+        font: Font = Font(font_name="Arial", height=12),
+        page: Optional[int] = None,
+        rect: Optional[Tuple[float, float, float, float]] = None,
+        align: Align = Align.LEFT,
+        color: int = 0x000000,
     ):
         """
         add text to the document
@@ -95,8 +97,8 @@ class Document:
             for word in line.split(" "):
                 if new_lines[-1]:
                     if (
-                            Document.__get_text_size(new_lines[-1] + " " + word, font)
-                            < rect[2] - rect[0]
+                        Document.__get_text_size(new_lines[-1] + " " + word, font)
+                        < rect[2] - rect[0]
                     ):
                         new_lines[-1] += " " + word
                     else:
@@ -121,11 +123,11 @@ class Document:
         )
 
     def add_frame_rect(
-            self,
-            rect: Optional[Tuple[float, float, float, float]] = None,
-            width: float = 0.01,
-            color: int = 0x000000,
-            page: Optional[int] = None,
+        self,
+        rect: Optional[Tuple[float, float, float, float]] = None,
+        width: float = 0.01,
+        color: int = 0x000000,
+        page: Optional[int] = None,
     ):
         """
         add frame rectangle to the document
@@ -161,11 +163,15 @@ class Document:
             }
         )
 
-    def add_image(self, image: Union[str, Image], rect: Optional[Tuple[int, int, int, int]] = None,
-                  page: Optional[int] = None):
+    def add_image(
+        self,
+        image: Union[str, Image.Image],
+        rect: Optional[Tuple[int, int, int, int]] = None,
+        page: Optional[int] = None,
+    ):
         """
-        add image to the document
-        on windows: transparent will become white background
+        | add image to the document.
+        | on windows: transparent will become white background
 
         :param image: the image to add, an PIL Image instance or a path to an image
         :param rect: the rectangle to draw on (inches), None to draw on the whole page
@@ -181,29 +187,32 @@ class Document:
             self.pages = page + 1
 
         if page < 0:
-            raise IndexError(f"Page index out of range, must be above or equal to {-self.pages} (the number of pages)")
+            raise IndexError(
+                f"Page index out of range, must be above or equal to {-self.pages} (the number of pages)"
+            )
 
         if isinstance(image, str):
             image = Image.open(image)
 
         image_width, image_height = image.size
         if rect is None:
-            scale = min((self.page_size[0] - 0.75 * 2) / image_width, (self.page_size[1] - 0.75 * 2) / image_height)
+            scale = min(
+                (self.page_size[0] - 0.75 * 2) / image_width,
+                (self.page_size[1] - 0.75 * 2) / image_height,
+            )
             new_width = int(image_width * scale)
             new_height = int(image_height * scale)
             center = (self.page_size[0] / 2, self.page_size[1] / 2)
 
-            rect = (center[0] - new_width / 2,
-                    center[1] - new_height / 2,
-                    center[0] + new_width / 2,
-                    center[1] + new_height / 2)
+            rect = (
+                center[0] - new_width / 2,
+                center[1] - new_height / 2,
+                center[0] + new_width / 2,
+                center[1] + new_height / 2,
+            )
 
         self.data.append(
-            {
-                "type": "image",
-                "page": page,
-                "data": {"image": image, "rect": rect}
-            }
+            {"type": "image", "page": page, "data": {"image": image, "rect": rect}}
         )
 
     @staticmethod

@@ -1,6 +1,7 @@
 """
 Printers utils.
 """
+
 from typing import List
 
 
