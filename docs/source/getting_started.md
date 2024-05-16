@@ -41,7 +41,7 @@ now you can add text to your doc:
 ```
 the `Document.add_text` method gets 4 parameters:
 * `text` - the text that will add to the document
-* `font` - the Font wee printing with see Font for more info, by default Arial  12
+* `font` - the Font we are printing with see Font for more info, by default Arial 12 normal
 * `page` - the page's index to print in, by default create new page and add the text to this page
 * `rect` - the rect to print on in (tuple of 4 floats) in the page, by default will be 0.75 inches margin
 now we want to print the document

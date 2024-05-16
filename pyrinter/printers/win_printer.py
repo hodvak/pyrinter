@@ -41,6 +41,7 @@ class Printer(AbsPrinter):
                     "height": int(
                         Printer.__inch_to_printer_size(data["font"].height / 72)
                     ),
+                    "weight": 700 if data["font"].weight == "bold" else 400,
                 }
             )
         )

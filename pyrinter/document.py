@@ -6,9 +6,11 @@ from typing import Tuple, Generator, Optional, Union
 from PIL import Image
 
 
-class Font(namedtuple("Font", ("font_name", "height"))):
+class Font(namedtuple("Font", ("font_name", "height", "weight"))):
     """
-    class to represent font properties (font name and height)
+    class to represent font properties (font name, height and weight)
+
+    weight can be either "normal" or "bold"
     """
 
 
@@ -57,7 +59,7 @@ class Document:
     def add_text(
         self,
         text: str,
-        font: Font = Font(font_name="Arial", height=12),
+        font: Font = Font(font_name="Arial", height=12, weight="normal"),
         page: Optional[int] = None,
         rect: Optional[Tuple[float, float, float, float]] = None,
         align: Align = Align.LEFT,
@@ -225,7 +227,7 @@ class Document:
         :return: the width of the text
         """
         root = Tk()  # Needed to estimate the width.
-        font_var = TkFont(family=font.font_name, size=font.height, weight="normal")
+        font_var = TkFont(family=font.font_name, size=font.height, weight=font.weight)
         width = font_var.measure(text) / 105
         root.destroy()  # Destroy the created window
         return width
