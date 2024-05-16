@@ -227,6 +227,8 @@ class Document:
         :return: the width of the text
         """
         root = Tk()  # Needed to estimate the width.
+        if font.weight != "bold": # Make sure we have a valid weight be defaulting to "normal"
+            font.weight = "normal"
         font_var = TkFont(family=font.font_name, size=font.height, weight=font.weight)
         width = font_var.measure(text) / 105
         root.destroy()  # Destroy the created window
