@@ -1,17 +1,19 @@
+from dataclasses import dataclass
 from enum import Enum
 from tkinter import Tk
 from tkinter.font import Font as TkFont
-from collections import namedtuple
-from typing import Tuple, Generator, Optional, Union
+from typing import Literal, Tuple, Generator, Optional, Union
 from PIL import Image
 
-
-class Font(namedtuple("Font", ("font_name", "height", "weight"))):
+@dataclass
+class Font:
     """
     class to represent font properties (font name, height and weight)
-
-    weight can be either "normal" or "bold"
     """
+
+    font_name: str
+    height: int
+    weight: Literal["normal", "bold"] = "normal"
 
 
 class Align(Enum):
@@ -227,8 +229,6 @@ class Document:
         :return: the width of the text
         """
         root = Tk()  # Needed to estimate the width.
-        if font.weight != "bold": # Make sure we have a valid weight be defaulting to "normal"
-            font.weight = "normal"
         font_var = TkFont(family=font.font_name, size=font.height, weight=font.weight)
         width = font_var.measure(text) / 105
         root.destroy()  # Destroy the created window
