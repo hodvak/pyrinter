@@ -1,15 +1,19 @@
+from dataclasses import dataclass
 from enum import Enum
 from tkinter import Tk
 from tkinter.font import Font as TkFont
-from collections import namedtuple
-from typing import Tuple, Generator, Optional, Union
+from typing import Literal, Tuple, Generator, Optional, Union
 from PIL import Image
 
+@dataclass
+class Font:
+    """
+    class to represent font properties (font name, height and weight)
+    """
 
-class Font(namedtuple("Font", ("font_name", "height"))):
-    """
-    class to represent font properties (font name and height)
-    """
+    font_name: str
+    height: int
+    weight: Literal["normal", "bold"] = "normal"
 
 
 class Align(Enum):
@@ -57,7 +61,7 @@ class Document:
     def add_text(
         self,
         text: str,
-        font: Font = Font(font_name="Arial", height=12),
+        font: Font = Font(font_name="Arial", height=12, weight="normal"),
         page: Optional[int] = None,
         rect: Optional[Tuple[float, float, float, float]] = None,
         align: Align = Align.LEFT,
@@ -225,7 +229,7 @@ class Document:
         :return: the width of the text
         """
         root = Tk()  # Needed to estimate the width.
-        font_var = TkFont(family=font.font_name, size=font.height, weight="normal")
+        font_var = TkFont(family=font.font_name, size=font.height, weight=font.weight)
         width = font_var.measure(text) / 105
         root.destroy()  # Destroy the created window
         return width
